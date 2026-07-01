@@ -522,9 +522,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,4vw,56px);align-items:center">
 
-        <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ hideVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:540px;border-radius:18px;overflow:hidden;background:#0B2F2C">
-          <video id="puneet-video" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline muted autoplay loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
-          <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:74px;height:74px;border:none;border-radius:50%;background:#ED6A1A;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.32);opacity:{{ videoPlaying ? '0' : '1' }};pointer-events:{{ videoPlaying ? 'none' : 'auto' }};transition:opacity .35s ease">
+        <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ leaveVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:540px;border-radius:18px;overflow:hidden;background:#0B2F2C;cursor:pointer">
+          <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline muted autoplay loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
+          <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}">
             <sc-if value="{{ videoPaused }}" hint-placeholder-val="{{ true }}">
               <span style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px"></span>
             </sc-if>
@@ -608,11 +608,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div style="display:flex;flex-direction:column;gap:14px">
           <div style="position:relative">
-            <img src="assets/img/ct-scan-review.png" alt="Before — placeholder image, replace with a real consented patient photo" style="display:block;width:100%;aspect-ratio:16/11;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
+            <img src="assets/img/before.jpg" alt="Before — placeholder image, replace with a real consented patient photo" style="display:block;width:100%;aspect-ratio:16/11;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
             <span style="position:absolute;top:14px;left:14px;font:700 13px/1 Inter,sans-serif;color:#1C1815;background:#FFFFFF;padding:8px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(28,24,21,.12)">Before</span>
           </div>
           <div style="position:relative">
-            <img src="assets/img/treatment-room.png" alt="After — placeholder image, replace with a real consented patient photo" style="display:block;width:100%;aspect-ratio:16/11;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
+            <img src="assets/img/after.jpg" alt="After — placeholder image, replace with a real consented patient photo" style="display:block;width:100%;aspect-ratio:16/11;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
             <span style="position:absolute;top:14px;left:14px;font:700 13px/1 Inter,sans-serif;color:#FFFFFF;background:#0E3B38;padding:8px 14px;border-radius:999px;box-shadow:0 4px 12px rgba(28,24,21,.18)">After</span>
           </div>
         </div>
@@ -1043,10 +1043,23 @@ class Component extends DCLogic {
         boxShadow:'0 10px 28px rgba(0,0,0,.32)'
       },
       showVideoPlay: function () {
-        if (self.state.videoPlaying) self.setState({ showVideoButton: true });
+        self._videoHover = true;
+        if (self.state.videoPlaying) {
+          self.setState({ showVideoButton: true });
+        }
       },
       hideVideoPlay: function () {
-        if (self.state.videoPlaying) self.setState({ showVideoButton: false });
+        setTimeout(function () {
+          if (self.state.videoPlaying && !self._videoHover) {
+            self.setState({ showVideoButton: false });
+          }
+        }, 300);
+      },
+      leaveVideoPlay: function () {
+        self._videoHover = false;
+        if (self.state.videoPlaying) {
+          self.setState({ showVideoButton: false });
+        }
       },
       submitForm: function (e) { self.submitForm(e); },
       videoPlaying: this.state.videoPlaying,
