@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB"><head>
+<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sutton Dental &amp; Implant Clinic</title>
@@ -11,8 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MVFFLHVT');</script>
 <!-- End Google Tag Manager -->
-<script src="assets/js/dc-runtime.js"></script>
-<link rel="icon" type="image/png" href="assets/img/favicon.ico">
+<script src="assets/js/dc-runtime.js"></script>s
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -363,6 +363,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   a { color: inherit; }
   :focus-visible { outline: 2px solid #0E3B38; outline-offset: 2px; border-radius: 4px; }
   @keyframes scprogress { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
+  @media (max-width: 659px) {
+    #enquiry-grid { display: flex !important; flex-direction: column; }
+    #enquiry-intro-block { order: 1; }
+    #enquiry-list-block { order: 2; }
+    #enquiry-image-block { order: 3; }
+    #enquiry-form-block { order: 4; }
+  }
 </style>
 <script src="assets/js/image-slot.js"></script>
 </helmet>
@@ -397,7 +404,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
 
         <div style="position:relative">
-          <img src="assets/img/team-portrait.jpg" alt="Dr Puneet Jain at Sutton Dental &amp; Implant Clinic" style="display:block;width:100%;aspect-ratio:4/5;max-height:560px;border:1px solid #E7E0D6;border-radius:18px;object-fit:cover">
+          <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ leaveVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:560px;border-radius:18px;overflow:hidden;background:#0B2F2C;cursor:pointer">
+            <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline muted loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
+            <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}">
+              <sc-if value="{{ videoPaused }}" hint-placeholder-val="{{ true }}">
+                <span style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px"></span>
+              </sc-if>
+              <sc-if value="{{ videoPlaying }}" hint-placeholder-val="{{ false }}">
+                <span style="display:flex;gap:6px"><span style="width:6px;height:24px;background:#FFFFFF;border-radius:2px"></span><span style="width:6px;height:24px;background:#FFFFFF;border-radius:2px"></span></span>
+              </sc-if>
+            </button>
+          </div>
           <div style="position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:11px;background:#FFFFFF;border-radius:14px;padding:11px 15px;box-shadow:0 12px 30px rgba(28,24,21,.18)">
             <span style="color:#E8A33D;letter-spacing:1.5px;font-size:15px">★★★★★</span>
             <span style="font:600 14px/1.2 Inter,sans-serif;color:#1C1815">4.9 · <span style="color:#5C544B;font-weight:500">370+ patient reviews</span></span>
@@ -410,14 +427,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <!-- ============ TRUST STRIP (under hero) ============ -->
   <div style="background:#0E3B38">
-    <div style="max-width:1080px;margin:0 auto;padding:18px clamp(20px,5vw,40px)">
-      <p style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 18px;margin:0;text-align:center;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF">
-        <span>Over 3,000 implants</span><span style="opacity:.45">·</span>
-        <span>Rated 5★ by 370+ patients</span><span style="opacity:.45">·</span>
-        <span>Implant-only since 2020</span><span style="opacity:.45">·</span>
-        <span>Royal College of Surgeons trained</span><span style="opacity:.45">·</span>
-        <span>Straumann</span>
-      </p>
+    <div style="max-width:1080px;margin:0 auto;padding:20px clamp(20px,5vw,40px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 24px">
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:9px;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF;white-space:nowrap"><span style="color:#7FB3A9;font-size:15px;line-height:1">✓</span>Over 3,000 implants</div>
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:9px;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF;white-space:nowrap"><span style="color:#7FB3A9;font-size:15px;line-height:1">✓</span>Rated 5★ by 370+ patients</div>
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:9px;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF;white-space:nowrap"><span style="color:#7FB3A9;font-size:15px;line-height:1">✓</span>Implant-only since 2020</div>
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:9px;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF;white-space:nowrap"><span style="color:#7FB3A9;font-size:15px;line-height:1">✓</span>Royal College of Surgeons trained</div>
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:9px;font:600 14px/1.4 Inter,sans-serif;color:#EAF1EF;white-space:nowrap"><span style="color:#7FB3A9;font-size:15px;line-height:1">✓</span>Straumann</div>
+      </div>
     </div>
   </div>
 
@@ -500,7 +517,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1E7A53;margin:0 0 10px">Spread the cost</p>
           <p style="font:600 clamp(24px,3.6vw,30px)/1.15 Fraunces,serif;color:#0E3B38;margin:0">0% APR over 24 months</p>
           <p style="font:400 16px/1.6 Inter,sans-serif;color:#5C544B;margin:16px 0 0">Representative example: cash price £3,850, 24 monthly payments of £160.42, total amount payable £3,850 (0% APR). That works out from around £37 a week. Prefer to keep it simple? You can also split the cost 50/50.</p>
-          <p style="font:400 13px/1.55 Inter,sans-serif;color:#7C7264;margin:18px 0 0;padding-top:16px;border-top:1px solid #E7E0D6">[FCA STATUS — to confirm]. Finance is subject to status and acceptance. The 50/50 split is a payment plan, not regulated credit.</p>
+          <p style="font:400 13px/1.55 Inter,sans-serif;color:#7C7264;margin:18px 0 0;padding-top:16px;border-top:1px solid #E7E0D6">Finance is subject to status and acceptance. The 50/50 split is a payment plan, not regulated credit.</p>
         </div>
 
       </div>
@@ -523,16 +540,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,4vw,56px);align-items:center">
 
-        <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ leaveVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:540px;border-radius:18px;overflow:hidden;background:#0B2F2C;cursor:pointer">
-          <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline muted loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
-          <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}">
-            <sc-if value="{{ videoPaused }}" hint-placeholder-val="{{ true }}">
-              <span style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px"></span>
-            </sc-if>
-            <sc-if value="{{ videoPlaying }}" hint-placeholder-val="{{ false }}">
-              <span style="display:flex;gap:6px"><span style="width:6px;height:24px;background:#FFFFFF;border-radius:2px"></span><span style="width:6px;height:24px;background:#FFFFFF;border-radius:2px"></span></span>
-            </sc-if>
-          </button>
+        <div style="position:relative;width:100%;aspect-ratio:4/5;max-height:540px;border-radius:18px;overflow:hidden">
+          <img src="assets/img/team-portrait.jpg" alt="Dr Puneet Jain at Sutton Dental &amp; Implant Clinic" style="display:block;width:100%;height:100%;object-fit:cover">
         </div>
 
         <div>
@@ -541,10 +550,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <blockquote style="margin:26px 0 0;padding:22px 26px;border-left:3px solid #ED6A1A;background:rgba(255,255,255,.05);border-radius:0 12px 12px 0">
             <p style="font:500 clamp(20px,2.8vw,25px)/1.4 Fraunces,serif;font-style:italic;color:#FFFFFF;margin:0">“This is my practice. I’m here every day. If you have a question or a concern, you call us — and you get seen.”</p>
           </blockquote>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px">
-            <span style="font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 12px;border-radius:8px">RCS two-year diploma</span>
-            <span style="font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 12px;border-radius:8px">Implant-only since 2020</span>
-            <span style="font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 12px;border-radius:8px">Straumann</span>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:24px">
+            <span style="text-align:center;font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 10px;border-radius:8px">RCS two-year diploma</span>
+            <span style="text-align:center;font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 10px;border-radius:8px">Implant-only since 2020</span>
+            <span style="text-align:center;font:600 13px/1.3 Inter,sans-serif;color:#CFE0DC;background:rgba(255,255,255,.08);padding:8px 10px;border-radius:8px">Straumann</span>
           </div>
         </div>
 
@@ -619,11 +628,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
       </div>
 
-      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:40px;padding-top:32px;border-top:1px solid #E7E0D6">
-        <span style="font:600 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#7C7264;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:14px 18px">[STRAUMANN MARK]</span>
-        <span style="font:600 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#7C7264;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:14px 18px">[ROYAL COLLEGE OF SURGEONS MARK]</span>
-        <span style="font:600 12px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:#7C7264;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:14px 18px">[GDC MARK]</span>
-        <span style="margin-left:auto;font:400 13px/1.5 Inter,sans-serif;color:#7C7264">Individual results vary.</span>
+      <div style="margin-top:40px;padding-top:32px;border-top:1px solid #E7E0D6">
+        <p style="margin:0 0 16px;text-align:right;font:400 13px/1.5 Inter,sans-serif;color:#7C7264">Individual results vary.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:18px 12px"><img src="assets/img/logo-straumann.png" alt="Straumann" style="display:block;height:38px;width:auto;max-width:100%"></span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:18px 12px"><img src="assets/img/logo-rcs.png" alt="Royal College of Surgeons" style="display:block;height:38px;width:auto;max-width:100%"></span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:10px;padding:18px 12px"><img src="assets/img/logo-gdc.png" alt="General Dental Council" style="display:block;height:38px;width:auto;max-width:100%"></span>
+        </div>
       </div>
 
       <!-- CTA after proof -->
@@ -655,28 +666,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- ============ 10. ENQUIRY FORM ============ -->
   <section id="enquiry" style="background:#F3EEE6;padding:clamp(52px,8vw,96px) 0;scroll-margin-top:16px">
     <div style="max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px)">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,5vw,56px);align-items:start">
 
-        <div style="display:flex;flex-direction:column;gap:22px">
-          <div>
-            <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#1E7A53;margin:0 0 14px">Your free first step</p>
-            <h2 style="font:600 clamp(26px,3.6vw,38px)/1.14 Fraunces,serif;letter-spacing:-.01em;color:#1C1815;margin:0">A relaxed 20 minutes with Puneet, before you decide anything</h2>
-            <p style="font:400 17px/1.55 Inter,sans-serif;color:#5C544B;margin:14px 0 0">No clinical jargon and no sales pitch — just an honest conversation about whether implants are right for you.</p>
-          </div>
-          <img src="assets/img/reception.jpg" alt="Reception at Sutton Dental &amp; Implant Clinic" style="display:block;width:100%;aspect-ratio:16/10;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
+      <div id="enquiry-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:clamp(28px,5vw,56px);align-items:start">
+
+        <div id="enquiry-intro-block" style="grid-column:1;grid-row:1">
+          <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#1E7A53;margin:0 0 14px">Your free first step</p>
+          <h2 style="font:600 clamp(26px,3.6vw,38px)/1.14 Fraunces,serif;letter-spacing:-.01em;color:#1C1815;margin:0">A relaxed 20 minutes with Puneet, before you decide anything</h2>
+          <p style="font:400 17px/1.55 Inter,sans-serif;color:#5C544B;margin:14px 0 0">No clinical jargon and no sales pitch — just an honest conversation about whether implants are right for you.</p>
+        </div>
+
+        <div id="enquiry-image-block" style="grid-column:1;grid-row:2;margin-top:22px">
+          <img src="assets/img/consultation.png" alt="Sutton Dental &amp; Implant Clinic reception signage" style="display:block;width:100%;aspect-ratio:16/10;border:1px solid #E7E0D6;border-radius:16px;object-fit:cover">
+        </div>
+
+        <div id="enquiry-list-block" style="grid-column:1;grid-row:3;margin-top:22px">
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px">
             <li style="display:flex;gap:12px;font:500 16px/1.5 Inter,sans-serif;color:#1C1815"><span style="flex:0 0 auto;color:#1E7A53;font-weight:700;font-size:18px">✓</span> Twenty minutes with the specialist himself, not a salesperson</li>
             <li style="display:flex;gap:12px;font:500 16px/1.5 Inter,sans-serif;color:#1C1815"><span style="flex:0 0 auto;color:#1E7A53;font-weight:700;font-size:18px">✓</span> No pressure and no commitment of any kind</li>
             <li style="display:flex;gap:12px;font:500 16px/1.5 Inter,sans-serif;color:#1C1815"><span style="flex:0 0 auto;color:#1E7A53;font-weight:700;font-size:18px">✓</span> Go ahead later and the £200 full consultation is credited to your treatment</li>
           </ul>
-          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-top:20px;border-top:1px solid #E7E0D6">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding-top:20px;margin-top:22px;border-top:1px solid #E7E0D6">
             <span style="font:500 16px/1.4 Inter,sans-serif;color:#5C544B">Prefer to talk now?</span>
             <a href="tel:01213541922" style="font:700 17px/1.2 Inter,sans-serif;color:#0E3B38;text-decoration:none">Call&nbsp;0121&nbsp;354&nbsp;1922</a>
             <span style="display:inline-flex;align-items:center;gap:6px;font:500 14px/1.4 Inter,sans-serif;color:#5C544B"><span style="color:#E8A33D;letter-spacing:1px">★★★★★</span> 4.9 · 370+ patients</span>
           </div>
         </div>
 
-        <div ontouchstart="{{ reviewTouchStart }}" ontouchend="{{ reviewTouchEnd }}" style="background:#FFFFFF;border:1px solid #E7E0D6;border-radius:18px;padding:clamp(26px,4vw,40px);box-shadow:0 10px 40px rgba(28,24,21,.07)">
+        <div id="enquiry-form-block" ontouchstart="{{ reviewTouchStart }}" ontouchend="{{ reviewTouchEnd }}" style="grid-column:2;grid-row:1 / span 3;background:#FFFFFF;border:1px solid #E7E0D6;border-radius:18px;padding:clamp(26px,4vw,40px);box-shadow:0 10px 40px rgba(28,24,21,.07)">
 
         <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
           <div>
@@ -771,7 +787,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <section style="background:#FBF8F4;padding:clamp(48px,7vw,84px) 0">
     <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,40px)">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));align-items:stretch;border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(28,24,21,.16);background:#0E3B38">
-        <img src="assets/img/surgery-closeup.jpg" alt="Dr Puneet Jain placing a dental implant" style="display:block;width:100%;height:100%;min-height:340px;object-fit:cover">
+        <img src="assets/img/old-smile.png" alt="Dr Puneet Jain placing a dental implant" style="display:block;width:100%;height:100%;min-height:340px;object-fit:cover">
         <div style="background:#0E3B38;padding:clamp(36px,5vw,60px);display:flex;flex-direction:column;justify-content:center;gap:24px">
           <div>
             <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#E8A33D;margin:0 0 16px">Your first step is free</p>
@@ -806,8 +822,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div>
           <p style="font:700 12px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 12px">Opening hours</p>
           <div style="display:flex;flex-direction:column;gap:7px">
-            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Mon–Fri</span><span>[09:00 – 17:00]</span></div>
-            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Saturday</span><span>[09:00 – 13:00]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Mon–Fri</span><span>[09:00 AM – 5:00 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Saturday</span><span>[09:00 AM – 1:00 PM]</span></div>
             <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Sunday</span><span>Closed</span></div>
           </div>
         </div>
@@ -821,8 +837,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);display:flex;flex-direction:column;gap:12px">
         <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.62);margin:0">£3,850 is the all-in price for a single implant including extraction. Complex cases — bone graft, sinus lift, multiple or full-arch — are quoted separately. Individual results vary.</p>
-        <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.62);margin:0">[FCA STATUS — to confirm]. Representative example: cash price £3,850, 24 monthly payments of £160.42, total amount payable £3,850 (0% APR). Finance is subject to status and acceptance. The 50/50 option is a payment plan, not regulated credit.</p>
-        <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.62);margin:0">If something isn’t right, please speak to us first. You can also contact the Dental Complaints Service [PHONE / WEBSITE] or the General Dental Council.</p>
+        <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.62);margin:0">Representative example: cash price £3,850, 24 monthly payments of £160.42, total amount payable £3,850 (0% APR). Finance is subject to status and acceptance. The 50/50 option is a payment plan, not regulated credit.</p>
+        <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.62);margin:0">If something isn’t right, please speak to us first. You can also contact the Dental Complaints Service or the General Dental Council.</p>
         <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.45);margin:6px 0 0">© <span>Sutton Dental &amp; Implant Clinic</span>. All rights reserved.</p>
       </div>
     </div>
@@ -976,9 +992,9 @@ class Component extends DCLogic {
     ];
 
     const options = [
-      { t: 'Single tooth',         slotId: 'opt-single',   shot: 'Single implant — result close-up',  img: 'assets/img/surgery-closeup.jpg',    b: 'One missing or failing tooth replaced with a single implant and crown that looks and works like your own.' },
-      { t: 'Multiple teeth',       slotId: 'opt-multiple', shot: 'Implant bridge — result close-up',  img: 'assets/img/ct-scan-review.png',     b: 'Several teeth restored with an implant-supported bridge \u2014 without grinding down the healthy teeth beside them.' },
-      { t: 'Full arch / All-on-4', slotId: 'opt-arch',     shot: 'Full-arch result — finished smile', img: 'assets/img/patient-consultation.png', b: 'A full set of fixed teeth secured on as few as four implants \u2014 a stable alternative to loose dentures.' }
+      { t: 'Single tooth',         slotId: 'opt-single',   shot: 'Single implant — result close-up',  img: 'assets/img/single-tooth.png',    b: 'One missing or failing tooth replaced with a single implant and crown that looks and works like your own.' },
+      { t: 'Multiple teeth',       slotId: 'opt-multiple', shot: 'Implant bridge — result close-up',  img: 'assets/img/multiple-tooth.png',     b: 'Several teeth restored with an implant-supported bridge \u2014 without grinding down the healthy teeth beside them.' },
+      { t: 'Full arch / All-on-4', slotId: 'opt-arch',     shot: 'Full-arch result — finished smile', img: 'assets/img/full-arch.png', b: 'A full set of fixed teeth secured on as few as four implants \u2014 a stable alternative to loose dentures.' }
     ];
 
     const reviews = [
