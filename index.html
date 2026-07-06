@@ -733,6 +733,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </select>
               </div>
 
+              <!-- Meta -->
+              <input type="hidden" name="fbp" id="f-fbp">
+              <input type="hidden" name="fbc" id="f-fbc">
+
+              <!-- Google Ads -->
+              <input type="hidden" name="gclid" id="f-gclid">
+              <input type="hidden" name="gbraid" id="f-gbraid">
+              <input type="hidden" name="wbraid" id="f-wbraid">
+              <input type="hidden" name="gad_source" id="f-gad_source">
+
+              <!-- UTM -->
+              <input type="hidden" name="utm_source" id="f-utm_source">
+              <input type="hidden" name="utm_medium" id="f-utm_medium">
+              <input type="hidden" name="utm_campaign" id="f-utm_campaign">
+              <input type="hidden" name="utm_term" id="f-utm_term">
+              <input type="hidden" name="utm_content" id="f-utm_content">
+
               <label style="display:flex;gap:11px;align-items:flex-start;font:400 14px/1.5 Inter,sans-serif;color:#5C544B;cursor:pointer">
                 <input id="f-consent" name="consent" type="checkbox" required aria-required="true" style="margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:#0E3B38">
                 <span>I’m happy for Sutton Dental &amp; Implant Clinic to contact me about my enquiry. We’ll never share your details. <a href="#footer" style="color:#0E3B38;text-decoration:underline">Privacy</a>.</span>
@@ -953,6 +970,25 @@ class Component extends DCLogic {
     e.preventDefault();
     const fd = new FormData(e.target);
     const name = (fd.get('name') || '').toString().trim();
+
+    var eventId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+      : 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+    var fbp = (document.cookie.match(/_fbp=([^;]+)/) || [])[1] || '';
+    var fbc = (document.cookie.match(/_fbc=([^;]+)/) || [])[1] || '';
+    if (!fbc) {
+      var fbclid = new URLSearchParams(window.location.search).get('fbclid');
+      if (fbclid) fbc = 'fb.1.' + Date.now() + '.' + fbclid;
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'lead_submit',
+      form_name: 'implant_enquiry',
+      enquiry_type: document.getElementById('f-need').value,
+      event_id: eventId,
+      fbp: fbp,
+      fbc: fbc
+    });
+
     // === CRM submission ===
     // Replace [CRM ENDPOINT] with your endpoint. The visitor stays on this page either way.
     // fetch('[CRM ENDPOINT]', { method: 'POST', body: fd }).catch(function(){});
@@ -1130,5 +1166,46 @@ class Component extends DCLogic {
 }
 </script>
 
+<!-- CallRail (Call Tracking) -->
+<script type="text/javascript" src="//cdn.callrail.com/companies/940621870/eb373b21ec6a13d14098/12/swap.js"></script>
+
+<!-- Populate tracking parameters -->
+<script>
+(function() {
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : '';
+  }
+
+  var params = new URLSearchParams(window.location.search);
+
+  // Persist first-touch attribution for the session, in case the user
+  // browses a few pages before submitting and the query string is gone
+  var stored = JSON.parse(sessionStorage.getItem('adAttribution') || '{}');
+  var trackedParams = [
+    'gclid', 'gbraid', 'wbraid', 'gad_source',
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'
+  ];
+  trackedParams.forEach(function(key) {
+    if (params.get(key)) stored[key] = params.get(key);
+  });
+  sessionStorage.setItem('adAttribution', JSON.stringify(stored));
+
+  // Meta values
+  var fbp = getCookie('_fbp'); // set automatically by the Meta Pixel base tag
+  var fbc = getCookie('_fbc');
+  if (!fbc && params.get('fbclid')) {
+    fbc = 'fb.1.' + Date.now() + '.' + params.get('fbclid');
+  }
+
+  // Populate hidden fields
+  document.getElementById('f-fbp').value = fbp || '';
+  document.getElementById('f-fbc').value = fbc || '';
+  trackedParams.forEach(function(key) {
+    var field = document.getElementById('f-' + key);
+    if (field) field.value = stored[key] || '';
+  });
+})();
+</script>
 
 </body></html>
