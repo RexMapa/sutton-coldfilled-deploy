@@ -892,7 +892,10 @@ class Component extends DCLogic {
       if (this._videoEl) {
         var self = this;
 
-        // Video autoplays muted (browsers require this).
+        // Force playback to start since dynamic rendering bypasses native autoplay
+        this._videoEl.muted = true;
+        this._videoEl.play().catch(function () {});
+
         // Unmute on the first user interaction anywhere on the page.
         this._unmuteOnInteraction = function () {
           if (self._videoEl) self._videoEl.muted = false;
