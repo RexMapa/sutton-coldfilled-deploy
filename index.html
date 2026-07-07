@@ -405,7 +405,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div style="position:relative">
           <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ leaveVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:560px;border-radius:18px;overflow:hidden;background:#0B2F2C;cursor:pointer">
-            <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
+            <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" autoplay playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
             <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}">
               <sc-if value="{{ videoPaused }}" hint-placeholder-val="{{ true }}">
                 <span style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px"></span>
@@ -858,8 +858,8 @@ class Component extends DCLogic {
   state = {
   vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
   openFaq: 0,
-  videoPlaying: false,
-  showVideoButton: true,
+  videoPlaying: true,
+  showVideoButton: false,
   submitted: false,
     submittedName: '',
     reviewIndex: 0,
@@ -877,13 +877,28 @@ class Component extends DCLogic {
     if (typeof document !== 'undefined') {
       this._videoEl = document.getElementById('puneet-video');
       if (this._videoEl) {
+        var self = this;
+
+        // Force playback to start since dynamic rendering bypasses native autoplay
+        this._videoEl.muted = true;
+        this._videoEl.play().catch(function () {});
+
+        // Unmute on the first user interaction anywhere on the page.
+        this._unmuteOnInteraction = function () {
+          if (self._videoEl) self._videoEl.muted = false;
+          document.removeEventListener('click', self._unmuteOnInteraction);
+          document.removeEventListener('touchstart', self._unmuteOnInteraction);
+          self._unmuteOnInteraction = null;
+        };
+        document.addEventListener('click', this._unmuteOnInteraction);
+        document.addEventListener('touchstart', this._unmuteOnInteraction);
+
         this._onVideoEnded = () => {
           const v = this._videoEl;
-          v.muted = true;
           v.loop = true;
           v.currentTime = 0;
           v.play().catch(function () {});
-          this.setState({ videoPlaying: false });
+          this.setState({ videoPlaying: true, showVideoButton: false });
         };
         this._videoEl.addEventListener('ended', this._onVideoEnded);
       }
@@ -894,6 +909,10 @@ class Component extends DCLogic {
 
   if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this._videoEl && this._onVideoEnded) this._videoEl.removeEventListener('ended', this._onVideoEnded);
+    if (this._unmuteOnInteraction) {
+      document.removeEventListener('click', this._unmuteOnInteraction);
+      document.removeEventListener('touchstart', this._unmuteOnInteraction);
+    }
   }
 
   scrollToForm() {
@@ -930,8 +949,6 @@ class Component extends DCLogic {
     const playing = !s.videoPlaying;
     if (v) {
       if (playing) {
-        v.muted = false;
-        v.loop = false;
         if (v.ended) v.currentTime = 0;
         v.play().catch(function () {});
       } else {
@@ -940,7 +957,7 @@ class Component extends DCLogic {
     }
     return {
       videoPlaying: playing,
-      showVideoButton: !playing
+      showVideoButton: !playing || !!this._videoHover
     };
   });
 }
