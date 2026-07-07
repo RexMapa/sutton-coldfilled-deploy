@@ -701,6 +701,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <p style="font:400 17px/1.55 Inter,sans-serif;color:#5C544B;margin:14px 0 0">Tell us a little about you and our team will be in touch to arrange a time with Puneet.</p>
 
             <form onsubmit="{{ submitForm }}" style="margin-top:26px;display:flex;flex-direction:column;gap:18px">
+              <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+                <label for="f-website">Leave this field blank</label>
+                <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              </div>
               <div>
                 <label for="f-name" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Full name</label>
                 <input id="f-name" name="name" type="text" required aria-required="true" autocomplete="name" placeholder="Your name" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
@@ -974,13 +978,19 @@ class Component extends DCLogic {
     e.preventDefault();
     const fd = new FormData(e.target);
     const name = (fd.get('name') || '').toString().trim();
+    // Honeypot: real visitors never see or fill this field, so a filled
+    // value means a bot. Show the normal "thank you" state but skip the
+    // webhook so spam never reaches the inbox.
+    const isBot = !!(fd.get('website') || '').toString().trim();
     // === CRM submission ===
     // Sends the enquiry to Zapier, which forwards it on as an email.
-    fetch('https://hooks.zapier.com/hooks/catch/26496932/4um6lf6/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(fd.entries()))
-    }).catch(function(){});
+    if (!isBot) {
+      fetch('https://hooks.zapier.com/hooks/catch/26496932/4um6lf6/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(fd.entries()))
+      }).catch(function(){});
+    }
     this.setState({ submitted: true, submittedName: name });
     if (typeof document !== 'undefined') {
       const el = document.getElementById('enquiry');
