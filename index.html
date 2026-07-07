@@ -977,19 +977,31 @@ class Component extends DCLogic {
   submitForm(e) {
     e.preventDefault();
     const fd = new FormData(e.target);
-    const name = (fd.get('name') || '').toString().trim();
+    const name  = (fd.get('name')  || '').toString().trim();
+    const phone = (fd.get('phone') || '').toString().trim();
+    const email = (fd.get('email') || '').toString().trim();
+    const need  = (fd.get('need')  || '').toString().trim();
     // Honeypot: real visitors never see or fill this field, so a filled
-    // value means a bot. Show the normal "thank you" state but skip the
-    // webhook so spam never reaches the inbox.
+    // value means a bot. Show the normal "thank you" state but skip both
+    // the CRM webhook and the ad-conversion event, so spam never reaches
+    // the inbox and never gets counted as a lead by Meta/Google Ads.
     const isBot = !!(fd.get('website') || '').toString().trim();
-    // === CRM submission ===
-    // Sends the enquiry to Zapier, which forwards it on as an email.
     if (!isBot) {
+      // === CRM submission (Zapier -> EnquiryBox) ===
       fetch('https://hooks.zapier.com/hooks/catch/26496932/4um6lf6/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(fd.entries()))
+        body: fd
       }).catch(function(){});
+
+      // === GTM / Meta Pixel event (matches existing "CE - lead_submit" trigger) ===
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'lead_submit',
+        enquiry_type: need,
+        event_id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
+        email: email,
+        phone_number: phone
+      });
     }
     this.setState({ submitted: true, submittedName: name });
     if (typeof document !== 'undefined') {
