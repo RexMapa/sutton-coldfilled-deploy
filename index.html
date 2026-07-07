@@ -405,7 +405,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div style="position:relative">
           <div onmouseenter="{{ showVideoPlay }}" onmouseleave="{{ leaveVideoPlay }}" style="position:relative;width:100%;aspect-ratio:4/5;max-height:560px;border-radius:18px;overflow:hidden;background:#0B2F2C;cursor:pointer">
-            <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" autoplay playsinline muted loop preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
+            <video id="puneet-video" onclick="{{ toggleVideo }}" src="assets/vid/puneet-intro.mp4" poster="assets/img/puneet-video-poster.jpg" playsinline muted loop preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0B2F2C"></video>
             <button type="button" onclick="{{ toggleVideo }}" aria-label="Play the 60-second introduction from Dr Puneet Jain" style="{{ playButtonStyle }}">
               <sc-if value="{{ videoPaused }}" hint-placeholder-val="{{ true }}">
                 <span style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #FFFFFF;margin-left:5px"></span>
@@ -534,8 +534,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <section style="background:#0E3B38;padding:clamp(52px,8vw,96px) 0">
     <div style="max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,40px)">
       <div style="text-align:center;max-width:660px;margin:0 auto 44px">
-        <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#7FB3A9;margin:0 0 14px">Meet the specialist</p>
-        <h2 style="font:600 clamp(28px,4.4vw,44px)/1.14 Fraunces,serif;letter-spacing:-.01em;color:#FFFFFF;margin:0">The specialist who looks after you, start to finish</h2>
+        <p style="font:700 13px/1 Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#7FB3A9;margin:0 0 14px">Meet Your Dentist</p>
+        <h2 style="font:600 clamp(28px,4.4vw,44px)/1.14 Fraunces,serif;letter-spacing:-.01em;color:#FFFFFF;margin:0">The dentist who looks after you, start to finish.</h2>
       </div>
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,4vw,56px);align-items:center">
@@ -546,7 +546,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div>
           <h3 style="font:600 clamp(28px,4.4vw,40px)/1.12 Fraunces,serif;letter-spacing:-.01em;color:#FFFFFF;margin:0">Dr Puneet Jain</h3>
-          <p style="font:400 clamp(18px,2.2vw,19px)/1.6 Inter,sans-serif;color:#D7E4E1;margin:16px 0 0">Implant-only specialist. Qualified 2006, implant-only since 2020. Places around 180 implants a year — over 3,000 placed. Royal College of Surgeons two-year diploma. GDC No. 103973.</p>
+          <p style="font:400 clamp(18px,2.2vw,19px)/1.6 Inter,sans-serif;color:#D7E4E1;margin:16px 0 0">Implant-only dentist. Qualified 2006, implant-only since 2020. Places around 180 implants a year — over 3,000 placed. Royal College of Surgeons two-year diploma. GDC No. 103973.</p>
           <blockquote style="margin:26px 0 0;padding:22px 26px;border-left:3px solid #ED6A1A;background:rgba(255,255,255,.05);border-radius:0 12px 12px 0">
             <p style="font:500 clamp(20px,2.8vw,25px)/1.4 Fraunces,serif;font-style:italic;color:#FFFFFF;margin:0">“This is my practice. I’m here every day. If you have a question or a concern, you call us — and you get seen.”</p>
           </blockquote>
@@ -733,23 +733,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 </select>
               </div>
 
-              <!-- Meta -->
-              <input type="hidden" name="fbp" id="f-fbp">
-              <input type="hidden" name="fbc" id="f-fbc">
-
-              <!-- Google Ads -->
-              <input type="hidden" name="gclid" id="f-gclid">
-              <input type="hidden" name="gbraid" id="f-gbraid">
-              <input type="hidden" name="wbraid" id="f-wbraid">
-              <input type="hidden" name="gad_source" id="f-gad_source">
-
-              <!-- UTM -->
-              <input type="hidden" name="utm_source" id="f-utm_source">
-              <input type="hidden" name="utm_medium" id="f-utm_medium">
-              <input type="hidden" name="utm_campaign" id="f-utm_campaign">
-              <input type="hidden" name="utm_term" id="f-utm_term">
-              <input type="hidden" name="utm_content" id="f-utm_content">
-
               <label style="display:flex;gap:11px;align-items:flex-start;font:400 14px/1.5 Inter,sans-serif;color:#5C544B;cursor:pointer">
                 <input id="f-consent" name="consent" type="checkbox" required aria-required="true" style="margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:#0E3B38">
                 <span>I’m happy for Sutton Dental &amp; Implant Clinic to contact me about my enquiry. We’ll never share your details. <a href="#footer" style="color:#0E3B38;text-decoration:underline">Privacy</a>.</span>
@@ -839,7 +822,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div>
           <p style="font:700 12px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 12px">Opening hours</p>
           <div style="display:flex;flex-direction:column;gap:7px">
-            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Mon–Fri</span><span>[09:00 AM – 5:00 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Monday</span><span>[08:30 AM – 5:30 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Tuesday</span><span>[08:30 AM – 5:30 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Wednesday</span><span>[08:30 AM – 6:30 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Thursday</span><span>[08:30 AM – 5:30 PM]</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Friday</span><span>[08:30 AM – 2:00 PM]</span></div>
             <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Saturday</span><span>[09:00 AM – 1:00 PM]</span></div>
             <div style="display:flex;justify-content:space-between;gap:16px;font:500 14px/1.5 Inter,sans-serif;color:rgba(255,255,255,.82)"><span>Sunday</span><span>Closed</span></div>
           </div>
@@ -871,8 +858,8 @@ class Component extends DCLogic {
   state = {
   vw: typeof window !== 'undefined' ? window.innerWidth : 1280,
   openFaq: 0,
-  videoPlaying: true,
-  showVideoButton: false,
+  videoPlaying: false,
+  showVideoButton: true,
   submitted: false,
     submittedName: '',
     reviewIndex: 0,
@@ -890,28 +877,13 @@ class Component extends DCLogic {
     if (typeof document !== 'undefined') {
       this._videoEl = document.getElementById('puneet-video');
       if (this._videoEl) {
-        var self = this;
-
-        // Force playback to start since dynamic rendering bypasses native autoplay
-        this._videoEl.muted = true;
-        this._videoEl.play().catch(function () {});
-
-        // Unmute on the first user interaction anywhere on the page.
-        this._unmuteOnInteraction = function () {
-          if (self._videoEl) self._videoEl.muted = false;
-          document.removeEventListener('click', self._unmuteOnInteraction);
-          document.removeEventListener('touchstart', self._unmuteOnInteraction);
-          self._unmuteOnInteraction = null;
-        };
-        document.addEventListener('click', this._unmuteOnInteraction);
-        document.addEventListener('touchstart', this._unmuteOnInteraction);
-
         this._onVideoEnded = () => {
           const v = this._videoEl;
+          v.muted = true;
           v.loop = true;
           v.currentTime = 0;
           v.play().catch(function () {});
-          this.setState({ videoPlaying: true, showVideoButton: false });
+          this.setState({ videoPlaying: false });
         };
         this._videoEl.addEventListener('ended', this._onVideoEnded);
       }
@@ -922,10 +894,6 @@ class Component extends DCLogic {
 
   if (this._onResize) window.removeEventListener('resize', this._onResize);
     if (this._videoEl && this._onVideoEnded) this._videoEl.removeEventListener('ended', this._onVideoEnded);
-    if (this._unmuteOnInteraction) {
-      document.removeEventListener('click', this._unmuteOnInteraction);
-      document.removeEventListener('touchstart', this._unmuteOnInteraction);
-    }
   }
 
   scrollToForm() {
@@ -962,6 +930,8 @@ class Component extends DCLogic {
     const playing = !s.videoPlaying;
     if (v) {
       if (playing) {
+        v.muted = false;
+        v.loop = false;
         if (v.ended) v.currentTime = 0;
         v.play().catch(function () {});
       } else {
@@ -970,7 +940,7 @@ class Component extends DCLogic {
     }
     return {
       videoPlaying: playing,
-      showVideoButton: !playing || !!this._videoHover
+      showVideoButton: !playing
     };
   });
 }
@@ -987,25 +957,6 @@ class Component extends DCLogic {
     e.preventDefault();
     const fd = new FormData(e.target);
     const name = (fd.get('name') || '').toString().trim();
-
-    var eventId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
-      : 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-    var fbp = (document.cookie.match(/_fbp=([^;]+)/) || [])[1] || '';
-    var fbc = (document.cookie.match(/_fbc=([^;]+)/) || [])[1] || '';
-    if (!fbc) {
-      var fbclid = new URLSearchParams(window.location.search).get('fbclid');
-      if (fbclid) fbc = 'fb.1.' + Date.now() + '.' + fbclid;
-    }
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'lead_submit',
-      form_name: 'implant_enquiry',
-      enquiry_type: document.getElementById('f-need').value,
-      event_id: eventId,
-      fbp: fbp,
-      fbc: fbc
-    });
-
     // === CRM submission ===
     // Replace [CRM ENDPOINT] with your endpoint. The visitor stays on this page either way.
     // fetch('[CRM ENDPOINT]', { method: 'POST', body: fd }).catch(function(){});
@@ -1132,7 +1083,9 @@ class Component extends DCLogic {
       },
       showVideoPlay: function () {
         self._videoHover = true;
-        self.setState({ showVideoButton: true });
+        if (self.state.videoPlaying) {
+          self.setState({ showVideoButton: true });
+        }
       },
       hideVideoPlay: function () {
         setTimeout(function () {
@@ -1181,46 +1134,5 @@ class Component extends DCLogic {
 }
 </script>
 
-<!-- CallRail (Call Tracking) -->
-<script type="text/javascript" src="//cdn.callrail.com/companies/940621870/eb373b21ec6a13d14098/12/swap.js"></script>
-
-<!-- Populate tracking parameters -->
-<script>
-(function() {
-  function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : '';
-  }
-
-  var params = new URLSearchParams(window.location.search);
-
-  // Persist first-touch attribution for the session, in case the user
-  // browses a few pages before submitting and the query string is gone
-  var stored = JSON.parse(sessionStorage.getItem('adAttribution') || '{}');
-  var trackedParams = [
-    'gclid', 'gbraid', 'wbraid', 'gad_source',
-    'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'
-  ];
-  trackedParams.forEach(function(key) {
-    if (params.get(key)) stored[key] = params.get(key);
-  });
-  sessionStorage.setItem('adAttribution', JSON.stringify(stored));
-
-  // Meta values
-  var fbp = getCookie('_fbp'); // set automatically by the Meta Pixel base tag
-  var fbc = getCookie('_fbc');
-  if (!fbc && params.get('fbclid')) {
-    fbc = 'fb.1.' + Date.now() + '.' + params.get('fbclid');
-  }
-
-  // Populate hidden fields
-  document.getElementById('f-fbp').value = fbp || '';
-  document.getElementById('f-fbc').value = fbc || '';
-  trackedParams.forEach(function(key) {
-    var field = document.getElementById('f-' + key);
-    if (field) field.value = stored[key] || '';
-  });
-})();
-</script>
 
 </body></html>
