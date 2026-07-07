@@ -975,8 +975,12 @@ class Component extends DCLogic {
     const fd = new FormData(e.target);
     const name = (fd.get('name') || '').toString().trim();
     // === CRM submission ===
-    // Replace [CRM ENDPOINT] with your endpoint. The visitor stays on this page either way.
-    // fetch('[CRM ENDPOINT]', { method: 'POST', body: fd }).catch(function(){});
+    // Sends the enquiry to Zapier, which forwards it on as an email.
+    fetch('https://hooks.zapier.com/hooks/catch/26496932/4um6lf6/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(Object.fromEntries(fd.entries()))
+    }).catch(function(){});
     this.setState({ submitted: true, submittedName: name });
     if (typeof document !== 'undefined') {
       const el = document.getElementById('enquiry');
