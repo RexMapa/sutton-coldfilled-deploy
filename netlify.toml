@@ -1,0 +1,18 @@
+# Sutton Dental & Implant Clinic — canonical dynamic landing page
+# Static site. No build step: publish the repo root as-is.
+# ?ag= variant selection is read client-side (see index.html head
+# script), so no redirect rules are needed for that.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# If the five ?ag= variants are later pre-rendered into separate static
+# files for extra speed (e.g. /single/index.html), add matching
+# [[redirects]] here to map ?ag=single -> /single/ etc. Not needed while
+# the page stays a single client-rendered index.html.
