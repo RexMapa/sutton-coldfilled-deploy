@@ -1503,9 +1503,18 @@
   }
 
   // src/index.ts
-  var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
+  // Self-hosted, same-origin copies of React 18.3.1 UMD production builds.
+  // Previously these were fetched from unpkg.com at runtime on every page
+  // load: two render-blocking third-party requests that (a) worked against
+  // this page's whole reason for existing (winning back Quality Score lost
+  // to landing-page speed) and (b) meant the entire page rendered nothing
+  // if unpkg was ever slow, rate-limited, down, or blocked by a network/CSP
+  // policy on the hosting edge. Bytes are unchanged from unpkg (verified
+  // identical via the SRI hashes below, which were already pinned in this
+  // file), so this is a same-behaviour swap, not a version change.
+  var REACT_URL = "assets/js/vendor/react.production.min.js";
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
-  var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
+  var REACT_DOM_URL = "assets/js/vendor/react-dom.production.min.js";
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
   function hideRawTemplate() {
     const s = document.createElement("style");
@@ -1517,6 +1526,9 @@
       //! nosemgrep: create-script-element
       const s = document.createElement("script");
       s.src = src;
+      // Integrity check kept even though the file is now same-origin: it's
+      // free defense-in-depth against the local copy being silently
+      // corrupted or swapped by a future deploy-pipeline step.
       s.integrity = integrity;
       s.crossOrigin = "anonymous";
       s.async = false;
@@ -1587,9 +1599,32 @@
     if (document.readyState !== "loading") api.__dcBoot();
     else document.addEventListener("DOMContentLoaded", () => api.__dcBoot());
   }
+  function showBootFailureFallback() {
+    // Belt-and-suspenders only: with React now self-hosted (see REACT_URL
+    // above) this should be unreachable in normal operation. It exists so
+    // that if it ever does happen (e.g. the vendor file goes missing in a
+    // future deploy), a visitor sees a phone number instead of a blank
+    // page. Kept intentionally tiny and dependency-free.
+    if (document.getElementById("dc-boot-fallback")) return;
+    const el = document.createElement("div");
+    el.id = "dc-boot-fallback";
+    el.setAttribute("role", "alert");
+    el.style.cssText = "position:fixed;inset:0;z-index:2147483647;background:#FBF6EE;" +
+      "display:flex;align-items:center;justify-content:center;text-align:center;" +
+      "padding:24px;font:400 16px/1.5 Inter,system-ui,sans-serif;color:#1C1815";
+    el.innerHTML = "<div style=\"max-width:420px\">" +
+      "<p style=\"margin:0 0 16px;font-weight:600\">Sorry \u2014 this page didn\u2019t load properly.</p>" +
+      "<p style=\"margin:0\">Please call us on " +
+      "<a href=\"tel:01213541922\" style=\"color:#0E3B38;font-weight:700;text-decoration:underline\">0121 354 1922</a>" +
+      " and we\u2019ll help you book your free consultation.</p>" +
+      "</div>";
+    const attach = () => document.body && document.body.appendChild(el);
+    if (document.body) attach();
+    else document.addEventListener("DOMContentLoaded", attach);
+  }
   hideRawTemplate();
   loadReactUmd().then(init).catch((err) => {
     console.error("[dc] failed to load React or boot:", err);
-    throw err;
+    showBootFailureFallback();
   });
 })();
