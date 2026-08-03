@@ -77,7 +77,7 @@ index.html                → falls back to core
 - The health-intent field (`enquiry_type`) is only included in the
   event sent toward Meta once marketing consent has been granted via
   the consent banner.
-- **The CRM endpoint is still the existing Zapier → EnquiryBox hook**,
+- **The CRM endpoint now posts to Formspree** (`https://formspree.io/f/xkoddegp`),
   not a GoHighLevel webhook — see Outstanding items.
 
 **GDC-mandated footer content** — four items that didn't exist before
@@ -218,9 +218,11 @@ access to:
    `TODO(Skalr)`). This is the single most urgent item — the live 0%
    finance ads shouldn't point `?ag=finance` at this page until it's
    filled in.
-2. **Swap the CRM endpoint** from the interim Zapier hook to the
-   GoHighLevel `ghl-suttonsmiles` inbound webhook (search for
-   `CRM_ENDPOINT_URL` in `index.html`).
+2. **Swap the CRM endpoint** from the interim Formspree endpoint
+   (`https://formspree.io/f/xkoddegp`) to the GoHighLevel
+   `ghl-suttonsmiles` inbound webhook, if/when that's ready (search for
+   `CRM_ENDPOINT_URL` in `index.html`, and the equivalent `fetch(...)`
+   call in `meta-ads.html`).
 3. **Lock one review-count figure** — 370+ / 340+ / 320+ currently
    disagree across sources; this build kept the existing 370+/4.9
    figures used throughout `index.html`. Confirm and, if it changes,

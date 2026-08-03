@@ -1004,10 +1004,11 @@ class Component extends DCLogic {
     // the inbox and never gets counted as a lead by Meta/Google Ads.
     const isBot = !!(fd.get('website') || '').toString().trim();
     if (!isBot) {
-      // === CRM submission (Zapier -> EnquiryBox) ===
-      fetch('https://hooks.zapier.com/hooks/catch/26496932/4u5j25n/', {
+      // === CRM submission (Formspree) ===
+      fetch('https://formspree.io/f/xkoddegp', {
         method: 'POST',
-        body: fd
+        body: fd,
+        headers: { 'Accept': 'application/json' }
       }).catch(function(){});
 
       // === GTM / Meta Pixel event (matches existing "CE - lead_submit" trigger) ===

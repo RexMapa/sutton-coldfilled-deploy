@@ -1532,14 +1532,14 @@ class Component extends DCLogic {
 
     this.setState({ submitting: true, submitError: false });
 
-    // === CRM submission ===
-    // TODO(Skalr): CRM_ENDPOINT_URL below still points at the interim
-    // Zapier -> EnquiryBox hook. The brief specifies the GoHighLevel
-    // inbound webhook for the ghl-suttonsmiles sub-account as the target
-    // CRM endpoint \u2014 swap the URL once Skalr supplies it.
-    const CRM_ENDPOINT_URL = 'https://hooks.zapier.com/hooks/catch/26496932/4um6lf6/';
+    // === CRM submission (Formspree) ===
+    const CRM_ENDPOINT_URL = 'https://formspree.io/f/xkoddegp';
 
-    fetch(CRM_ENDPOINT_URL, { method: 'POST', body: fd })
+    fetch(CRM_ENDPOINT_URL, {
+      method: 'POST',
+      body: fd,
+      headers: { 'Accept': 'application/json' }
+    })
       .then(function (res) {
         if (!res.ok) throw new Error('CRM responded with ' + res.status);
 
