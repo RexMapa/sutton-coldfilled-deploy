@@ -1004,12 +1004,30 @@ class Component extends DCLogic {
     // the inbox and never gets counted as a lead by Meta/Google Ads.
     const isBot = !!(fd.get('website') || '').toString().trim();
     if (!isBot) {
-      // === CRM submission (Formspree) ===
-      fetch('https://formspree.io/f/xkoddegp', {
+      // === CRM submission: Zapier webhook is primary — it forwards the
+      // lead into Boxly on the free/catch-hook plan, so Formspree never
+      // needs to be upgraded to a paid tier just to reach Boxly's API.
+      // Formspree is kept as the fallback, used only if the Zapier POST
+      // fails outright or comes back non-2xx. ===
+      const leadPayload = {};
+      fd.forEach(function (value, key) { leadPayload[key] = value; });
+
+      fetch('https://hooks.zapier.com/hooks/catch/26496932/4u5j25n/', {
         method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
-      }).catch(function(){});
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadPayload)
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Zapier responded with ' + res.status);
+        })
+        .catch(function () {
+          // === Fallback (Formspree) ===
+          fetch('https://formspree.io/f/xkoddegp', {
+            method: 'POST',
+            body: fd,
+            headers: { 'Accept': 'application/json' }
+          }).catch(function(){});
+        });
 
       // === GTM / Meta Pixel event (matches existing "CE - lead_submit" trigger) ===
       window.dataLayer = window.dataLayer || [];

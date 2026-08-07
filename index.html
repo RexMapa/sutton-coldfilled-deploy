@@ -1532,37 +1532,62 @@ class Component extends DCLogic {
 
     this.setState({ submitting: true, submitError: false });
 
-    // === CRM submission (Formspree) ===
-    const CRM_ENDPOINT_URL = 'https://formspree.io/f/xkoddegp';
+    // Fired once the lead has actually been delivered to *some* CRM
+    // (Zapier primary, or Formspree fallback) — never on a bare network
+    // send, so a failed POST can never show a fake success.
+    function onLeadDelivered() {
+      window.dataLayer = window.dataLayer || [];
+      const evt = {
+        event: 'lead_submit',
+        event_id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
+        email: email,
+        phone_number: phone
+      };
+      // Health-intent field: only forward to Meta once marketing
+      // consent has been granted via the consent banner (section 05).
+      const consent = (typeof window !== 'undefined' && window.__consentState) || {};
+      if (consent.marketing) evt.enquiry_type = need;
+      window.dataLayer.push(evt);
 
-    fetch(CRM_ENDPOINT_URL, {
+      self.setState({ submitted: true, submittedName: name, submitting: false, submitError: false });
+      self._scrollToEnquiry();
+    }
+
+    // === CRM submission: Zapier webhook is primary — it forwards the
+    // lead into Boxly on the free/catch-hook plan, so Formspree never
+    // needs to be upgraded to a paid tier just to reach Boxly's API.
+    // Formspree is kept as the fallback, used only if the Zapier POST
+    // fails outright or comes back non-2xx. ===
+    const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/26496932/4u5j25n/';
+    const CRM_ENDPOINT_URL = 'https://formspree.io/f/xkoddegp';
+    const leadPayload = {};
+    fd.forEach(function (value, key) { leadPayload[key] = value; });
+
+    fetch(ZAPIER_WEBHOOK_URL, {
       method: 'POST',
-      body: fd,
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(leadPayload)
     })
       .then(function (res) {
-        if (!res.ok) throw new Error('CRM responded with ' + res.status);
-
-        // === GTM / Meta Pixel event, fired ONLY after a confirmed 2xx ===
-        window.dataLayer = window.dataLayer || [];
-        const evt = {
-          event: 'lead_submit',
-          event_id: (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()),
-          email: email,
-          phone_number: phone
-        };
-        // Health-intent field: only forward to Meta once marketing
-        // consent has been granted via the consent banner (section 05).
-        const consent = (typeof window !== 'undefined' && window.__consentState) || {};
-        if (consent.marketing) evt.enquiry_type = need;
-        window.dataLayer.push(evt);
-
-        self.setState({ submitted: true, submittedName: name, submitting: false, submitError: false });
-        self._scrollToEnquiry();
+        if (!res.ok) throw new Error('Zapier responded with ' + res.status);
+        onLeadDelivered();
       })
       .catch(function () {
-        // Blocking-bug fix: a failed POST must never show a fake success.
-        self.setState({ submitting: false, submitError: true });
+        // === Fallback (Formspree) ===
+        fetch(CRM_ENDPOINT_URL, {
+          method: 'POST',
+          body: fd,
+          headers: { 'Accept': 'application/json' }
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('CRM responded with ' + res.status);
+            onLeadDelivered();
+          })
+          .catch(function () {
+            // Blocking-bug fix: if both the primary and fallback POSTs
+            // fail, never show a fake success.
+            self.setState({ submitting: false, submitError: true });
+          });
       });
   }
 
