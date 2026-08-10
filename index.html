@@ -1172,9 +1172,10 @@
                       <label for="f-time"
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Preferred
                         time</label>
-                      <select id="f-time" name="time"
+                      <select id="f-time" name="time" required aria-required="true"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
+                        <option value="" disabled selected>Please choose…</option>
                         <option value="morning">Morning</option>
                         <option value="afternoon">Afternoon</option>
                         <option value="evening">Evening</option>
