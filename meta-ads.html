@@ -995,15 +995,29 @@ class Component extends DCLogic {
   submitForm(e) {
     e.preventDefault();
     const fd = new FormData(e.target);
-    const name  = (fd.get('name')  || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
-    const email = (fd.get('email') || '').toString().trim();
-    const need  = (fd.get('need')  || '').toString().trim();
+    const name    = (fd.get('name')    || '').toString().trim();
+    const phone   = (fd.get('phone')   || '').toString().trim();
+    const email   = (fd.get('email')   || '').toString().trim();
+    const need    = (fd.get('need')    || '').toString().trim();
+    const time    = (fd.get('time')    || '').toString().trim();
+    const consent = (fd.get('consent') || '').toString().trim();
     // Honeypot: real visitors never see or fill this field, so a filled
     // value means a bot. Show the normal "thank you" state but skip both
     // the CRM webhook and the ad-conversion event, so spam never reaches
     // the inbox and never gets counted as a lead by Meta/Google Ads.
     const isBot = !!(fd.get('website') || '').toString().trim();
+
+    // Hard stop: never let a submission through to Zapier/Formspree, and
+    // never show the "thank you" state, if any required field is empty.
+    // The <input required> attributes already block this in a normal
+    // browser, but this is a second, independent guard in JS itself — it
+    // still fires even if `required` is stripped in devtools, a field is
+    // filled with only whitespace, or the form is submitted in a way that
+    // skips native validation.
+    if (!isBot && (!name || !phone || !email || !need || !time || !consent)) {
+      return;
+    }
+
     if (!isBot) {
       // === CRM submission: Zapier webhook is primary — it forwards the
       // lead into Boxly on the free/catch-hook plan, so Formspree never

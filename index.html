@@ -1516,10 +1516,12 @@ class Component extends DCLogic {
     e.preventDefault();
     const self = this;
     const fd = new FormData(e.target);
-    const name  = (fd.get('name')  || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
-    const email = (fd.get('email') || '').toString().trim();
-    const need  = (fd.get('need')  || '').toString().trim();
+    const name    = (fd.get('name')    || '').toString().trim();
+    const phone   = (fd.get('phone')   || '').toString().trim();
+    const email   = (fd.get('email')   || '').toString().trim();
+    const need    = (fd.get('need')    || '').toString().trim();
+    const time    = (fd.get('time')    || '').toString().trim();
+    const consent = (fd.get('consent') || '').toString().trim();
     // Honeypot: real visitors never see or fill this field, so a filled
     // value means a bot. Show the normal "thank you" state but skip both
     // the CRM webhook and the ad-conversion event, so spam never reaches
@@ -1527,6 +1529,18 @@ class Component extends DCLogic {
     const isBot = !!(fd.get('website') || '').toString().trim();
     if (isBot) {
       this.setState({ submitted: true, submittedName: name, submitError: false });
+      this._scrollToEnquiry();
+      return;
+    }
+
+    // Hard stop: never let a submission through to Zapier/Formspree if any
+    // required field is empty. The <input required> attributes already
+    // block this in a normal browser, but this check is a second, independent
+    // guard in JS itself — it still fires even if `required` is stripped in
+    // devtools, if a field is filled with only whitespace, or if the form is
+    // submitted programmatically in a way that skips native validation.
+    if (!name || !phone || !email || !need || !time || !consent) {
+      this.setState({ submitting: false, submitError: true });
       this._scrollToEnquiry();
       return;
     }
