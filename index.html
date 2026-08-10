@@ -1133,31 +1133,40 @@
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Full
                         name</label>
                       <input id="f-name" name="name" type="text" required aria-required="true" autocomplete="name"
-                        placeholder="Your name"
+                        placeholder="Your name" oninput="{{ clearNameError }}"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
+                      <sc-if value="{{ fieldErrors.name }}" hint-placeholder-val="{{ false }}">
+                        <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                      </sc-if>
                     </div>
                     <div>
                       <label for="f-phone"
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Phone</label>
                       <input id="f-phone" name="phone" type="tel" required aria-required="true" autocomplete="tel"
-                        placeholder="Mobile or landline"
+                        placeholder="Mobile or landline" oninput="{{ clearPhoneError }}"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
+                      <sc-if value="{{ fieldErrors.phone }}" hint-placeholder-val="{{ false }}">
+                        <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                      </sc-if>
                     </div>
                     <div>
                       <label for="f-email"
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Email</label>
                       <input id="f-email" name="email" type="email" required aria-required="true" autocomplete="email"
-                        placeholder="you@email.com"
+                        placeholder="you@email.com" oninput="{{ clearEmailError }}"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
+                      <sc-if value="{{ fieldErrors.email }}" hint-placeholder-val="{{ false }}">
+                        <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                      </sc-if>
                     </div>
                     <div>
                       <label for="f-need"
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">What do
                         you need?</label>
-                      <select id="f-need" name="need" required aria-required="true"
+                      <select id="f-need" name="need" required aria-required="true" onchange="{{ clearNeedError }}"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
                         <option value="" disabled selected>Please choose…</option>
@@ -1167,12 +1176,15 @@
                         <option value="dentures">Loose dentures</option>
                         <option value="not-sure">Not sure yet</option>
                       </select>
+                      <sc-if value="{{ fieldErrors.need }}" hint-placeholder-val="{{ false }}">
+                        <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                      </sc-if>
                     </div>
                     <div>
                       <label for="f-time"
                         style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Preferred
                         time</label>
-                      <select id="f-time" name="time" required aria-required="true"
+                      <select id="f-time" name="time" required aria-required="true" onchange="{{ clearTimeError }}"
                         style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none"
                         style-focus="border-color:#0E3B38;background:#FFFFFF">
                         <option value="" disabled selected>Please choose…</option>
@@ -1180,21 +1192,27 @@
                         <option value="afternoon">Afternoon</option>
                         <option value="evening">Evening</option>
                       </select>
+                      <sc-if value="{{ fieldErrors.time }}" hint-placeholder-val="{{ false }}">
+                        <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                      </sc-if>
                     </div>
 
                     <label
                       style="display:flex;gap:11px;align-items:flex-start;font:400 14px/1.5 Inter,sans-serif;color:#5C544B;cursor:pointer">
-                      <input id="f-consent" name="consent" type="checkbox" required aria-required="true"
+                      <input id="f-consent" name="consent" type="checkbox" required aria-required="true" onchange="{{ clearConsentError }}"
                         style="margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:#0E3B38">
                       <span>I’m happy for Sutton Dental &amp; Implant Clinic to contact me about my enquiry. We’ll never
                         share your details. <a href="https://www.suttonsmiles.com/privacy-policy" target="_blank"
                           rel="noopener" style="color:#0E3B38;text-decoration:underline">Privacy</a>.</span>
                     </label>
+                    <sc-if value="{{ fieldErrors.consent }}" hint-placeholder-val="{{ false }}">
+                      <p role="alert" style="margin:-10px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                    </sc-if>
 
                     <sc-if value="{{ submitError }}" hint-placeholder-val="{{ false }}">
                       <p role="alert"
                         style="margin:0;padding:14px 16px;border-radius:10px;background:rgba(196,60,40,.08);border:1px solid rgba(196,60,40,.25);font:500 15px/1.5 Inter,sans-serif;color:#8A2E1E">
-                        That didn't send \u2014 please try again, or call us on <a href="tel:01213541922"
+                        That didn't send — please try again, or call us on <a href="tel:01213541922"
                           style="color:#8A2E1E;font-weight:700;text-decoration:underline">0121&nbsp;354&nbsp;1922</a>
                         and we'll book you in directly.</p>
                     </sc-if>
@@ -1350,11 +1368,11 @@
                 Regulatory</p>
               <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.7);margin:0 0 8px">Dr Puneet Jain,
                 GDC No. 103973. Qualified 2006 in <span data-placeholder="country-of-qualification">[country of
-                  qualification \u2014 confirm]</span>. Registered with the <a href="https://www.gdc-uk.org"
+                  qualification — confirm]</span>. Registered with the <a href="https://www.gdc-uk.org"
                   target="_blank" rel="noopener" style="color:#FFFFFF;text-decoration:underline">General Dental
                   Council</a>.</p>
               <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.7);margin:0 0 8px">Sutton Dental
-                &amp; Implant Clinic is a <span data-placeholder="nhs-or-private">[NHS or private status \u2014
+                &amp; Implant Clinic is a <span data-placeholder="nhs-or-private">[NHS or private status —
                   confirm]</span> practice.</p>
               <p style="font:400 13px/1.6 Inter,sans-serif;color:rgba(255,255,255,.7);margin:0">GDC, 37 Wimpole Street,
                 London W1G 8DQ · <a href="https://www.gdc-uk.org" target="_blank" rel="noopener"
@@ -1404,6 +1422,7 @@ class Component extends DCLogic {
     submitting: false,
     submitError: false,
     submittedName: '',
+    fieldErrors: { name: false, phone: false, email: false, need: false, time: false, consent: false },
     reviewIndex: 0,
     whyActive: 0
   };
@@ -1539,13 +1558,26 @@ class Component extends DCLogic {
     // guard in JS itself — it still fires even if `required` is stripped in
     // devtools, if a field is filled with only whitespace, or if the form is
     // submitted programmatically in a way that skips native validation.
-    if (!name || !phone || !email || !need || !time || !consent) {
-      this.setState({ submitting: false, submitError: true });
+    const fieldErrors = {
+      name: !name,
+      phone: !phone,
+      email: !email,
+      need: !need,
+      time: !time,
+      consent: !consent
+    };
+    const hasFieldErrors = Object.keys(fieldErrors).some(function (k) { return fieldErrors[k]; });
+    if (hasFieldErrors) {
+      this.setState({ submitting: false, submitError: true, fieldErrors: fieldErrors });
       this._scrollToEnquiry();
       return;
     }
 
-    this.setState({ submitting: true, submitError: false });
+    this.setState({
+      submitting: true,
+      submitError: false,
+      fieldErrors: { name: false, phone: false, email: false, need: false, time: false, consent: false }
+    });
 
     // Fired once the lead has actually been delivered to *some* CRM
     // (Zapier primary, or Formspree fallback) — never on a bare network
@@ -1605,6 +1637,22 @@ class Component extends DCLogic {
           });
       });
   }
+
+  // Clears a single field's red "Required" message the moment the visitor
+  // fixes it (types something in, picks a dropdown option, ticks the box) —
+  // so they don't have to hit submit again just to see the message go away.
+  _clearFieldError(field) {
+    if (!this.state.fieldErrors[field]) return;
+    const next = Object.assign({}, this.state.fieldErrors);
+    next[field] = false;
+    this.setState({ fieldErrors: next });
+  }
+  clearNameError() { this._clearFieldError('name'); }
+  clearPhoneError() { this._clearFieldError('phone'); }
+  clearEmailError() { this._clearFieldError('email'); }
+  clearNeedError() { this._clearFieldError('need'); }
+  clearTimeError() { this._clearFieldError('time'); }
+  clearConsentError() { this._clearFieldError('consent'); }
 
   _scrollToEnquiry() {
     if (typeof document === 'undefined') return;

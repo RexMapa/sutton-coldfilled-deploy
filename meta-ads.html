@@ -727,19 +727,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </div>
               <div>
                 <label for="f-name" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Full name</label>
-                <input id="f-name" name="name" type="text" required aria-required="true" autocomplete="name" placeholder="Your name" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <input id="f-name" name="name" type="text" required aria-required="true" autocomplete="name" placeholder="Your name" oninput="{{ clearNameError }}" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <sc-if value="{{ fieldErrors.name }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                </sc-if>
               </div>
               <div>
                 <label for="f-phone" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Phone</label>
-                <input id="f-phone" name="phone" type="tel" required aria-required="true" autocomplete="tel" placeholder="Mobile or landline" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <input id="f-phone" name="phone" type="tel" required aria-required="true" autocomplete="tel" placeholder="Mobile or landline" oninput="{{ clearPhoneError }}" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <sc-if value="{{ fieldErrors.phone }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                </sc-if>
               </div>
               <div>
                 <label for="f-email" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Email</label>
-                <input id="f-email" name="email" type="email" required aria-required="true" autocomplete="email" placeholder="you@email.com" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <input id="f-email" name="email" type="email" required aria-required="true" autocomplete="email" placeholder="you@email.com" oninput="{{ clearEmailError }}" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <sc-if value="{{ fieldErrors.email }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                </sc-if>
               </div>
               <div>
                 <label for="f-need" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">What do you need?</label>
-                <select id="f-need" name="need" required aria-required="true" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <select id="f-need" name="need" required aria-required="true" onchange="{{ clearNeedError }}" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none" style-focus="border-color:#0E3B38;background:#FFFFFF">
                   <option value="" disabled selected>Please choose…</option>
                   <option value="one">One missing tooth</option>
                   <option value="several">Several teeth</option>
@@ -747,21 +756,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   <option value="dentures">Loose dentures</option>
                   <option value="not-sure">Not sure yet</option>
                 </select>
+                <sc-if value="{{ fieldErrors.need }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                </sc-if>
               </div>
               <div>
                 <label for="f-time" style="display:block;font:600 14px/1 Inter,sans-serif;color:#1C1815;margin-bottom:8px">Preferred time</label>
-                <select id="f-time" name="time" required aria-required="true" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none" style-focus="border-color:#0E3B38;background:#FFFFFF">
+                <select id="f-time" name="time" required aria-required="true" onchange="{{ clearTimeError }}" style="width:100%;font:400 16px/1.4 Inter,sans-serif;color:#1C1815;background:#FBF8F4;border:1px solid #E7E0D6;border-radius:10px;padding:14px;min-height:52px;appearance:none" style-focus="border-color:#0E3B38;background:#FFFFFF">
                   <option value="" disabled selected>Please choose…</option>
                   <option value="morning">Morning</option>
                   <option value="afternoon">Afternoon</option>
                   <option value="evening">Evening</option>
                 </select>
+                <sc-if value="{{ fieldErrors.time }}" hint-placeholder-val="{{ false }}">
+                  <p role="alert" style="margin:6px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+                </sc-if>
               </div>
 
               <label style="display:flex;gap:11px;align-items:flex-start;font:400 14px/1.5 Inter,sans-serif;color:#5C544B;cursor:pointer">
-                <input id="f-consent" name="consent" type="checkbox" required aria-required="true" style="margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:#0E3B38">
+                <input id="f-consent" name="consent" type="checkbox" required aria-required="true" onchange="{{ clearConsentError }}" style="margin-top:2px;width:20px;height:20px;flex:0 0 auto;accent-color:#0E3B38">
                 <span>I’m happy for Sutton Dental &amp; Implant Clinic to contact me about my enquiry. We’ll never share your details. <a href="#footer" style="color:#0E3B38;text-decoration:underline">Privacy</a>.</span>
               </label>
+              <sc-if value="{{ fieldErrors.consent }}" hint-placeholder-val="{{ false }}">
+                <p role="alert" style="margin:-10px 0 0;font:600 13px/1 Inter,sans-serif;color:#C43C28">Required</p>
+              </sc-if>
 
               <button type="submit" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#ED6A1A;color:#FFFFFF;font:700 18px/1.1 Inter,sans-serif;padding:18px 24px;border:none;border-radius:12px;cursor:pointer;min-height:58px;box-shadow:0 6px 18px rgba(237,106,26,.26);transition:background .15s ease,transform .15s ease" style-hover="background:#C75614;transform:translateY(-1px)" style-active="transform:translateY(0)">Book my free chat</button>
               <p style="text-align:center;margin:2px 0 0;font:400 14px/1.5 Inter,sans-serif;color:#7C7264">No pressure, no commitment. Our team will be in touch.</p>
@@ -884,6 +902,7 @@ class Component extends DCLogic {
   showVideoButton: false,
   submitted: false,
     submittedName: '',
+    fieldErrors: { name: false, phone: false, email: false, need: false, time: false, consent: false },
     reviewIndex: 0,
     whyActive: 0
   };
@@ -1014,8 +1033,21 @@ class Component extends DCLogic {
     // still fires even if `required` is stripped in devtools, a field is
     // filled with only whitespace, or the form is submitted in a way that
     // skips native validation.
-    if (!isBot && (!name || !phone || !email || !need || !time || !consent)) {
-      return;
+    if (!isBot) {
+      const fieldErrors = {
+        name: !name,
+        phone: !phone,
+        email: !email,
+        need: !need,
+        time: !time,
+        consent: !consent
+      };
+      const hasFieldErrors = Object.keys(fieldErrors).some(function (k) { return fieldErrors[k]; });
+      if (hasFieldErrors) {
+        this.setState({ fieldErrors: fieldErrors });
+        return;
+      }
+      this.setState({ fieldErrors: { name: false, phone: false, email: false, need: false, time: false, consent: false } });
     }
 
     if (!isBot) {
@@ -1060,6 +1092,22 @@ class Component extends DCLogic {
       if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 16, behavior: 'smooth' });
     }
   }
+
+  // Clears a single field's red "Required" message the moment the visitor
+  // fixes it (types something in, picks a dropdown option, ticks the box) —
+  // so they don't have to hit submit again just to see the message go away.
+  _clearFieldError(field) {
+    if (!this.state.fieldErrors[field]) return;
+    const next = Object.assign({}, this.state.fieldErrors);
+    next[field] = false;
+    this.setState({ fieldErrors: next });
+  }
+  clearNameError() { this._clearFieldError('name'); }
+  clearPhoneError() { this._clearFieldError('phone'); }
+  clearEmailError() { this._clearFieldError('email'); }
+  clearNeedError() { this._clearFieldError('need'); }
+  clearTimeError() { this._clearFieldError('time'); }
+  clearConsentError() { this._clearFieldError('consent'); }
 
   renderVals() {
     const self = this;
