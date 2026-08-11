@@ -1612,7 +1612,12 @@ class Component extends DCLogic {
 
     fetch(ZAPIER_WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      // text/plain avoids a CORS preflight (OPTIONS) request — some
+      // in-app browsers (e.g. Facebook/Instagram's) are known to drop
+      // or mishandle the body on preflighted cross-origin fetches.
+      // Zapier's Catch Hook parses the JSON string in the body either way.
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       body: JSON.stringify(leadPayload)
     })
       .then(function (res) {

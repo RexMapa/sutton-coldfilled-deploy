@@ -31,7 +31,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-MVFFLHVT');</script>
 <!-- End Google Tag Manager -->
 <script src="assets/js/dc-runtime.js"></script>
-<script type='text/javascript' src='https://app.boxly.ai/scripts/ga4_client_id_tracker.js' data-form-selector="" defer></script>
+<script type='text/javascript' src='https://app.boxly.ai/scripts/ga4_client_id_tracker.js' data-form-selector="#enquiry-form" defer></script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -720,7 +720,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <h2 style="font:600 clamp(26px,4vw,38px)/1.14 Fraunces,serif;letter-spacing:-.01em;color:#1C1815;margin:0">Book your free 20-minute chat</h2>
             <p style="font:400 17px/1.55 Inter,sans-serif;color:#5C544B;margin:14px 0 0">Tell us a little about you and our team will be in touch to arrange a time with Puneet.</p>
 
-            <form onsubmit="{{ submitForm }}" style="margin-top:26px;display:flex;flex-direction:column;gap:18px">
+            <form id="enquiry-form" onsubmit="{{ submitForm }}" style="margin-top:26px;display:flex;flex-direction:column;gap:18px">
               <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
                 <label for="f-website">Leave this field blank</label>
                 <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
@@ -1061,7 +1061,12 @@ class Component extends DCLogic {
 
       fetch('https://hooks.zapier.com/hooks/catch/26496932/4u5j25n/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        // text/plain avoids a CORS preflight (OPTIONS) request — some
+        // in-app browsers (e.g. Facebook/Instagram's) are known to drop
+        // or mishandle the body on preflighted cross-origin fetches.
+        // Zapier's Catch Hook parses the JSON string in the body either way.
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
         body: JSON.stringify(leadPayload)
       })
         .then(function (res) {
